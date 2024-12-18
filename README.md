@@ -2,10 +2,6 @@
 
 <img src="assets/chatofus_logo.png" width="300">
 
-Un outil communautaire pour améliorer l'expérience de jeu sur Dofus 3 en permettant aux joueurs de suivre et gérer le chat du jeu même à distance.
-
-## 📋 Description
-
 Chatofus est une application qui connecte le chat in-game de Dofus 3 à un serveur distant, offrant aux joueurs un accès permanent aux informations importantes du jeu. L'application enrichit l'expérience de chat standard avec des fonctionnalités avancées de gestion et de suivi.
 
 ## ✨ Fonctionnalités
