@@ -1,5 +1,7 @@
 # Chatofus
 
+<img src="assets/chatofus_logo.png" width="300">
+
 Un outil communautaire pour améliorer l'expérience de jeu sur Dofus 3 en permettant aux joueurs de suivre et gérer le chat du jeu même à distance.
 
 ## 📋 Description
