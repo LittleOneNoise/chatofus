@@ -1,6 +1,6 @@
 # Chatofus
 
-<img src="assets/chatofus_logo.png" width="300">
+<img src="assets/chatofus_logo.png" alt="logo chatofus" width="300">
 
 Chatofus est une application qui connecte le chat in-game de Dofus 3 à un serveur distant, offrant aux joueurs un accès permanent aux informations importantes du jeu. L'application enrichit l'expérience de chat standard avec des fonctionnalités avancées de gestion et de suivi.
 
@@ -15,9 +15,10 @@ Chatofus est une application qui connecte le chat in-game de Dofus 3 à un serve
 
 ## 🚀 Prérequis techniques
 
-- Node.js: v20.10.0
+- Node.js: v20.11.1
 - TypeScript: v5.1.3
 - NestJS: v10.x
+- Angular v19.x
 
 ---
 
