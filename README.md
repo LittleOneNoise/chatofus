@@ -13,6 +13,12 @@ Chatofus est une application qui connecte le chat in-game de Dofus 3 à un serve
   - Timer des Avis de Recherche
   - Positions des Portails
 
+## 🚀 Prérequis techniques
+
+- Node.js: v20.10.0
+- TypeScript: v5.1.3
+- NestJS: v10.x
+
 ---
 
 > **Note** : Ce projet est une initiative personnelle non-officielle et n'est pas affilié à Ankama Games.
