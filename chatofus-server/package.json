@@ -23,6 +23,8 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/platform-socket.io": "^10.4.15",
+    "@nestjs/websockets": "^10.4.15",
     "google-protobuf": "^3.21.4",
     "protoc-gen-ts": "^0.8.7",
     "reflect-metadata": "^0.2.0",
