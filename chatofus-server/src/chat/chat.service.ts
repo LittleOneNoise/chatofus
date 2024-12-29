@@ -14,6 +14,6 @@ export class ChatService {
     console.log('JSONIZED :');
     console.log(JSON.stringify(chatChannelMessageEvent, null, 2));
 
-    this.chatGateway.handleMessage(chatChannelMessageEvent);
+    this.chatGateway.sendNewMessage(chatChannelMessageEvent);
   }
 }

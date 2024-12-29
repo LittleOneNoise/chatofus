@@ -1,35 +1,37 @@
 import { Component } from '@angular/core';
 import { ChatChannelMessageEvent } from '../dto/chatChannelMessageEvent';
-import { Subscription } from 'rxjs';
-import { ChatService } from '../services/chat.service';
+import {SocketService} from '../services/socket.service';
+import {Socket} from 'socket.io-client';
+import {DatePipe, NgForOf} from '@angular/common';
 
 @Component({
   selector: 'app-chat',
-  imports: [],
+  imports: [
+    NgForOf,
+    DatePipe
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
 export class ChatComponent {
 
   messages: ChatChannelMessageEvent[] = [];
-  newMessage: string = '';
-  private messageSubscription: Subscription | undefined;
+  private socket: Socket | null = null;
 
-  constructor(private chatService: ChatService) {}
+  constructor(private socketService: SocketService) {}
 
-  ngOnInit() {
-    this.messageSubscription = this.chatService.onNewMessage().subscribe(
-      (message: ChatChannelMessageEvent) => {
-        this.messages.push(message);
-      }
-    );
-  }
+  ngOnInit(): void {
+    this.socket = this.socketService.connect();
 
-  ngOnDestroy() {
-    if (this.messageSubscription) {
-      this.messageSubscription.unsubscribe();
+    if (this.socket) {
+      this.socket.on('newMessage', (message: ChatChannelMessageEvent) => {
+        this.messages = [...this.messages, message];
+      });
+
     }
-    this.chatService.disconnect();
   }
 
+  ngOnDestroy(): void {}
+
+  protected readonly Date = Date;
 }
