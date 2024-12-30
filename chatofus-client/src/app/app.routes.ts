@@ -1,8 +1,8 @@
-import { RouterModule, Routes } from '@angular/router';
-import { ChatComponent } from './chat/chat.component';
-import { NgModule } from '@angular/core';
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'chat', pathMatch: 'full' }, // Redirige la route racine vers /chat
-  { path: 'chat', component: ChatComponent }
+  { path: '', redirectTo: '/chat', pathMatch: 'full' },
+  { path: 'chat', loadComponent: () => import('./features/chat/chat.component').then(m => m.ChatComponent) },
+  { path: 'wanted', loadComponent: () => import('./features/wanted/wanted.component').then(m => m.WantedComponent) },
+  { path: 'portals', loadComponent: () => import('./features/portals/portals.component').then(m => m.PortalsComponent) }
 ];
