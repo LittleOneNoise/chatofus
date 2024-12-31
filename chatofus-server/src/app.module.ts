@@ -5,9 +5,10 @@ import { ChatModule } from './chat/chat.module';
 import { LoggerService } from './logger/logger.service';
 import { PlayerInfoController } from './player-info/player-info.controller';
 import { PlayerInfoModule } from './player-info/player-info.module';
+import {CacheModule} from "@nestjs/cache-manager";
 
 @Module({
-  imports: [ChatModule, PlayerInfoModule],
+  imports: [ChatModule, PlayerInfoModule, CacheModule.register()],
   controllers: [AppController, PlayerInfoController],
   providers: [AppService, LoggerService],
 })

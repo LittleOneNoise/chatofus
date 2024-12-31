@@ -5,7 +5,7 @@
 
   <div class="relative">
     <div #chatContainer class="flex flex-col h-[600px] overflow-y-auto p-4 space-y-2">
-      @for (message of messages; track message.date) {
+      @for (message of messages; track $index) {
         <app-chat-message
           [message]="message"
           [@messageAnimation]="'show'" />

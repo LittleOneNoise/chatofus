@@ -11,14 +11,18 @@
           class="w-5 h-5"
           [title]="playerInfo.class">
         <span class="bg-gray-600 text-gray-200 text-xs px-1.5 py-0.5 rounded">
-          {{ playerInfo.level }}
+          {{ playerInfo.level ?? '???' }}
         </span>
       </ng-container>
       <ng-template #loadingState>
         <div class="w-5 h-5 animate-pulse bg-gray-600 rounded-full"></div>
         <div class="w-8 h-4 animate-pulse bg-gray-600 rounded"></div>
       </ng-template>
-      <span class="font-medium text-gray-100">{{ message.senderName }}</span>
+      <span
+        class="font-medium"
+        [style.color]="getUsernameColor(message.senderName)">
+          {{ message.senderName }}
+      </span>
     </div>
   </div>
   <div class="pl-4 border-l-2 border-gray-600 mt-2 ml-14">

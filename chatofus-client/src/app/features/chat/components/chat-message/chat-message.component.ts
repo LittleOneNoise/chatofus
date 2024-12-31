@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ChatChannelMessageEvent } from '../../../../dto/chatChannelMessageEvent';
 import {catchError, Observable, of} from 'rxjs';
 import {PlayerInfo, PlayerInfoService} from '../../../../services/player-info.service';
+import {ColorGeneratorService} from '../../../../services/color-generator.service';
 
 @Component({
   selector: 'app-chat-message',
@@ -16,24 +17,45 @@ export class ChatMessageComponent {
   playerInfo$: Observable<PlayerInfo | null> = of(null);
   loading = false;
 
-  constructor(private playerInfoService: PlayerInfoService) {}
+  constructor(private playerInfoService: PlayerInfoService, private colorGenerator: ColorGeneratorService) {}
 
   ngOnInit() {
     this.loading = true;
     this.playerInfo$ = this.playerInfoService.getPlayerInfo(this.message.senderName).pipe(
-      catchError(() => of(null))
+      catchError((): Observable<null> => of(null))
     );
   }
 
   getRaceIcon(className: string | null): string {
-    if (!className) return '/assets/loading-spinner.gif';
+
+    if (!className) return '/heads/unknown.png';
 
     const icons: { [key: string]: string } = {
+      'Cra': '/heads/cra.png',
+      'Ecaflip': '/heads/ecaflip.png',
+      'Eliotrope': '/heads/eliotrope.png',
+      'Eniripsa': '/heads/eniripsa.png',
+      'Enutrof': '/heads/enutrof.png',
       'Feca': '/heads/feca.png',
+      'Forgelance': '/heads/forgelance.png',
+      'Huppermage': '/heads/huppermage.png',
       'Iop': '/heads/iop.png',
-      // Ajoutez les autres classes ici
+      'Osamodas': '/heads/osamodas.png',
+      'Ouginak': '/heads/ouginak.png',
+      'Pandawa': '/heads/pandawa.png',
+      'Roublard': '/heads/roublard.png',
+      'Sacrieur': '/heads/sacrieur.png',
+      'Sadida': '/heads/sadida.png',
+      'Sram': '/heads/sram.png',
+      'Steamer': '/heads/steamer.png',
+      'Xelor': '/heads/xelor.png',
+      'Zobal': '/heads/zobal.png'
     };
     return icons[className] || '/heads/unknown.png';
+  }
+
+  getUsernameColor(username: string): string {
+    return this.colorGenerator.getColorForUsername(username);
   }
 
 }

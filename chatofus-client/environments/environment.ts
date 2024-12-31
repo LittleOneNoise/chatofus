@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   SOCKET_ENDPOINT: 'http://localhost:3000',
-  SERVER_HOST: "localhost",
+  SERVER_HOST: "http://localhost",
   SERVER_PORT: 3000,
   API_URI: 'api/v1/',
   DOMAIN: 'http://localhost:4200',
