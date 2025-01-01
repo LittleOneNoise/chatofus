@@ -1,7 +1,16 @@
 <div class="flex gap-4">
   <div class="flex-1 bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">
     <div class="p-4 bg-gray-750 border-b border-gray-700">
-      <h2 class="text-lg font-medium text-gray-100">{{ channelDisplay }}</h2>
+      <div class="flex flex-wrap gap-2">
+        @for (channel of Array.from(activeChannels); track channel) {
+          <span [class]="[CHANNEL_CONFIG[channel].bgClass, CHANNEL_CONFIG[channel].color, 'px-2 py-1 rounded-full text-sm']">
+            {{ CHANNEL_CONFIG[channel].name }}
+          </span>
+        }
+        @if (activeChannels.size === 0) {
+          <span class="text-gray-400">Aucun canal actif</span>
+        }
+      </div>
     </div>
 
   <div class="relative">
@@ -9,6 +18,7 @@
       @for (message of messages; track $index) {
         <app-chat-message
           [message]="message"
+          [highlightWords]="highlightWords"
           [@messageAnimation]="'show'" />
       }
 
@@ -36,30 +46,30 @@
   </div>
   </div>
 
-  <!-- Panneau de filtres -->
-  <div class="w-64 bg-gray-800 rounded-lg shadow-lg border border-gray-700 h-fit">
+  <div class="w-72 bg-gray-800 rounded-lg shadow-lg border border-gray-700 h-fit">
     <div class="p-4 bg-gray-750 border-b border-gray-700">
       <h2 class="text-lg font-medium text-gray-100">Filtres</h2>
     </div>
 
+    <!-- Panneau de filtres -->
     <div class="p-4 space-y-4">
-      <!-- Filtres de canaux -->
       <div class="space-y-2">
-        <h3 class="text-sm font-medium text-gray-300">Canaux</h3>
-        <div class="space-y-2">
-          @for (channelValue of Object.values(Channel); track channelValue) {
-            <label class="flex items-center space-x-2">
+        <h3 class="text-sm font-medium text-gray-300 mb-3">Canaux</h3>
+        <div class="grid grid-cols-1 gap-2">
+          @for (channel of availableChannels; track channel) {
+            <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-700/50 cursor-pointer">
               <input type="checkbox"
-                     [checked]="activeChannels.has($any(channelValue))"
-                     (change)="toggleChannel($any(channelValue))"
-                     class="form-checkbox text-blue-600 bg-gray-700 border-gray-600 rounded">
-              <span class="text-gray-300">{{ getChannelName($any(channelValue)) }}</span>
+                     [checked]="activeChannels.has(channel)"
+                     (change)="toggleChannel(channel)"
+                     class="rounded border-gray-600 bg-gray-700 checked:bg-blue-500 checked:border-blue-500 focus:ring-blue-500 focus:ring-offset-gray-800">
+              <span [class]="CHANNEL_CONFIG[channel].color">
+                {{ CHANNEL_CONFIG[channel].name }}
+              </span>
             </label>
           }
         </div>
       </div>
 
-      <!-- Filtre de mots -->
       <div class="space-y-2">
         <h3 class="text-sm font-medium text-gray-300">Surlignage</h3>
         <input type="text"
@@ -69,5 +79,4 @@
       </div>
     </div>
   </div>
-
 </div>

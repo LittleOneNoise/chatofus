@@ -5,6 +5,7 @@ import {Socket} from 'socket.io-client';
 import {CommonModule} from '@angular/common';
 import {ChatMessageComponent} from './components/chat-message/chat-message.component';
 import {chatAnimations} from './chat.animations';
+import {CHANNEL_CONFIG, ChannelInfo} from '../../models/channel-info.model';
 
 @Component({
   selector: 'app-chat',
@@ -15,8 +16,9 @@ import {chatAnimations} from './chat.animations';
 })
 export class ChatComponent {
 
+  readonly CHANNEL_CONFIG = CHANNEL_CONFIG;
   messages: ChatChannelMessageEvent[] = [];
-  activeChannels: Set<Channel> = new Set([Channel.SEEK, Channel.SALES, Channel.GUILD, Channel.PRIVATE]); // tous activés par défaut
+  activeChannels = new Set<Channel>(this.getChannelValues());
   highlightWords: string[] = [];
   private socket: Socket | null = null;
   private isScrolledToBottom = true;
@@ -81,6 +83,26 @@ export class ChatComponent {
     return this.messages.filter(msg => this.activeChannels.has(msg.channel));
   }
 
+  getChannelInfo(channel: Channel): ChannelInfo {
+    return CHANNEL_CONFIG[channel];
+  }
+
+  private getChannelValues(): Channel[] {
+    return Object.values(Channel).filter((v): v is Channel => typeof v === 'number');
+  }
+
+  get availableChannels(): Channel[] {
+    return this.getChannelValues();
+  }
+
+  toggleChannel(channel: Channel): void {
+    if (this.activeChannels.has(channel)) {
+      this.activeChannels.delete(channel);
+    } else {
+      this.activeChannels.add(channel);
+    }
+  }
+
   getChannelName(channel: Channel): string {
     const channelNames: Record<Channel, string> = {
       [Channel.GLOBAL]: 'Global',
@@ -110,14 +132,6 @@ export class ChatComponent {
       .join(', ') || 'Aucun canal';
   }
 
-  toggleChannel(channel: Channel): void {
-    if (this.activeChannels.has(channel)) {
-      this.activeChannels.delete(channel);
-    } else {
-      this.activeChannels.add(channel);
-    }
-  }
-
   updateHighlightWords(event: Event): void {
     const input = event.target as HTMLInputElement;
     const words = input.value;
@@ -136,4 +150,5 @@ export class ChatComponent {
   }
 
   protected readonly Object = Object;
+  protected readonly Array = Array;
 }
