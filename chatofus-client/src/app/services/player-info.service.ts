@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 
 export interface PlayerInfo {
   class: string;
-  level: number;
+  level: number | null;
 }
 
 @Injectable({

@@ -1,4 +1,3 @@
-// Enums
 export enum Channel {
   GLOBAL = 0,
   TEAM = 1,
@@ -18,7 +17,6 @@ export enum Channel {
   EXCHANGE = 16,
 }
 
-// Common types needed for ObjectItemInventory
 export interface ObjectEffect {
   action: number;
   valueString?: string;
@@ -77,7 +75,7 @@ export interface ObjectItemInventory {
   tagStorageUuids: string[];
 }
 
-// Main ChatChannelMessageEvent interface
+// Interface mère
 export interface ChatChannelMessageEvent {
   content: string;
   channel: Channel;

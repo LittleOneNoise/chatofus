@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { ChatChannelMessageEvent } from '../../dto/chatChannelMessageEvent';
-import { SocketService } from '../../services/socket.service';
-import { Socket } from 'socket.io-client';
-import { CommonModule } from '@angular/common';
-import { ChatMessageComponent } from './components/chat-message/chat-message.component';
-import { chatAnimations } from './chat.animations';
+import {Component} from '@angular/core';
+import {Channel, ChatChannelMessageEvent} from '../../dto/chatChannelMessageEvent';
+import {SocketService} from '../../services/socket.service';
+import {Socket} from 'socket.io-client';
+import {CommonModule} from '@angular/common';
+import {ChatMessageComponent} from './components/chat-message/chat-message.component';
+import {chatAnimations} from './chat.animations';
 
 @Component({
   selector: 'app-chat',
@@ -16,11 +16,14 @@ import { chatAnimations } from './chat.animations';
 export class ChatComponent {
 
   messages: ChatChannelMessageEvent[] = [];
+  activeChannels: Set<Channel> = new Set([Channel.SEEK, Channel.SALES, Channel.GUILD, Channel.PRIVATE]); // tous activés par défaut
+  highlightWords: string[] = [];
   private socket: Socket | null = null;
   private isScrolledToBottom = true;
   private chatContainer: HTMLElement | null = null;
   hasUnreadMessages = false;
   protected unreadMessagesCount = 0;
+  readonly Channel = Channel;
 
   constructor(private socketService: SocketService) {}
 
@@ -74,6 +77,57 @@ export class ChatComponent {
     }, 0);
   }
 
+  get filteredMessages(): ChatChannelMessageEvent[] {
+    return this.messages.filter(msg => this.activeChannels.has(msg.channel));
+  }
+
+  getChannelName(channel: Channel): string {
+    const channelNames: Record<Channel, string> = {
+      [Channel.GLOBAL]: 'Global',
+      [Channel.TEAM]: 'Team',
+      [Channel.GUILD]: 'Guilde',
+      [Channel.ALLIANCE]: 'Alliance',
+      [Channel.PARTY]: 'Groupe',
+      [Channel.SALES]: 'Ventes',
+      [Channel.SEEK]: 'Recherche',
+      [Channel.NOOB]: 'Débutant',
+      [Channel.ADMIN]: 'Admin',
+      [Channel.ARENA]: 'Arène',
+      [Channel.PRIVATE]: 'Privé',
+      [Channel.INFO]: 'Info',
+      [Channel.FIGHT_LOG]: 'Combat',
+      [Channel.ADS]: 'Annonces',
+      [Channel.EVENT]: 'Événement',
+      [Channel.EXCHANGE]: 'Échange'
+    };
+
+    return channelNames[channel];
+  }
+
+  get channelDisplay(): string {
+    return Array.from(this.activeChannels)
+      .map(channel => this.getChannelName(channel))
+      .join(', ') || 'Aucun canal';
+  }
+
+  toggleChannel(channel: Channel): void {
+    if (this.activeChannels.has(channel)) {
+      this.activeChannels.delete(channel);
+    } else {
+      this.activeChannels.add(channel);
+    }
+  }
+
+  updateHighlightWords(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const words = input.value;
+    this.highlightWords = words
+      .toLowerCase()
+      .split(',')
+      .map(word => word.trim())
+      .filter(word => word.length > 0);
+  }
+
   ngOnDestroy(): void {
     if (this.chatContainer) {
       this.chatContainer.removeEventListener('scroll', () => {});
@@ -81,4 +135,5 @@ export class ChatComponent {
     this.socket?.disconnect();
   }
 
+  protected readonly Object = Object;
 }
