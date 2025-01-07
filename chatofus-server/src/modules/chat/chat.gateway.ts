@@ -1,12 +1,7 @@
-import {
-  ConnectedSocket, MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-  WebSocketServer
-} from '@nestjs/websockets';
+import { WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-import { ChatChannelMessageEvent } from '../dto/chatChannelMessageEvent';
 import { Logger } from '@nestjs/common';
+import { ChatChannelMessageEvent } from './dto/chatChannelMessageEvent';
 
 @WebSocketGateway({
   cors: {
@@ -14,10 +9,9 @@ import { Logger } from '@nestjs/common';
   },
 })
 export class ChatGateway {
-  private readonly logger = new Logger(ChatGateway.name);
-
   @WebSocketServer()
   server: Server;
+  private readonly logger = new Logger(ChatGateway.name);
 
   handleConnection(client: Socket): void {
     const token = client.handshake?.query?.token;
@@ -32,5 +26,4 @@ export class ChatGateway {
   sendNewMessage(message: ChatChannelMessageEvent): void {
     this.server.emit('newMessage', message);
   }
-
 }

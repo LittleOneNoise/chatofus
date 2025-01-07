@@ -30,6 +30,8 @@
     "axios": "^1.7.9",
     "cache-manager": "^5.7.6",
     "cheerio": "^1.0.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
     "google-protobuf": "^3.21.4",
     "protoc-gen-ts": "^0.8.7",
     "puppeteer": "^23.11.1",
