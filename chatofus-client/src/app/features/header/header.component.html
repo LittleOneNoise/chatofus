@@ -1,0 +1,47 @@
+<header class="bg-background-secondary text-text-primary px-6 py-4 flex justify-between items-center shadow-md">
+  <!-- Logo et Nom -->
+  <div class="flex items-center space-x-4">
+    <img
+      alt="Chatofus Logo"
+      class="w-12 h-auto"
+      height="743"
+      ngSrc="/chatofus_logo.png"
+      width="1000"
+    />
+
+    <h1 class="text-3xl font-bold text-primary drop-shadow-md">Chatofus</h1>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex items-center space-x-8">
+    <!-- Lien actif -->
+    <a
+      class="px-4 py-2 rounded-full text-sm font-semibold bg-primary text-background transition hover:bg-primary-light"
+      routerLink="/"
+      routerLinkActive="active"
+    >
+      Live Chat
+    </a>
+
+    <!-- Lien inactif -->
+    <a
+      class="text-sm font-semibold text-text-primary transition hover:text-primary-light"
+      routerLink="/avis"
+    >
+      Avis de recherche
+    </a>
+
+    <!-- Lien inactif -->
+    <a
+      class="text-sm font-semibold text-text-primary transition hover:text-primary-light"
+      routerLink="/portails"
+    >
+      Portails
+    </a>
+  </nav>
+
+
+  <!-- Version -->
+  <span class="text-sm text-text-secondary">Version {{ version }}</span>
+</header>
+

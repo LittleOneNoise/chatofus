@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+  @apply px-4 py-2 rounded-full text-sm font-semibold bg-primary text-background transition hover:bg-primary-light;
+}

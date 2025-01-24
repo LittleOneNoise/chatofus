@@ -1,32 +1,45 @@
-<div class="min-h-screen bg-gray-900">
-  <header class="bg-gray-800 shadow-md border-b border-gray-700">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <div class="flex-shrink-0">
-          <img src="/chatofus_logo.png" alt="Logo" class="h-8 w-auto">
-        </div>
-        <div class="flex space-x-8">
-          <a routerLink="/chat"
-             routerLinkActive="text-blue-400"
-             class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors">
-            Chat
-          </a>
-          <a routerLink="/wanted"
-             routerLinkActive="text-blue-400"
-             class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors">
-            Avis de Recherche
-          </a>
-          <a routerLink="/portals"
-             routerLinkActive="text-blue-400"
-             class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors">
-            Portails
-          </a>
-        </div>
-      </div>
-    </nav>
-  </header>
+<!--<div class="min-h-screen bg-gray-900">-->
+<!--  <header class="bg-gray-800 shadow-md border-b border-gray-700">-->
+<!--    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">-->
+<!--      <div class="flex justify-between h-16 items-center">-->
+<!--        <div class="flex-shrink-0">-->
+<!--          <img src="/chatofus_logo.png" alt="Logo" class="h-8 w-auto">-->
+<!--        </div>-->
+<!--        <div class="flex space-x-8">-->
+<!--          <a routerLink="/chat"-->
+<!--             routerLinkActive="text-blue-400"-->
+<!--             class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors">-->
+<!--            Chat-->
+<!--          </a>-->
+<!--          <a routerLink="/wanted"-->
+<!--             routerLinkActive="text-blue-400"-->
+<!--             class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors">-->
+<!--            Avis de Recherche-->
+<!--          </a>-->
+<!--          <a routerLink="/portals"-->
+<!--             routerLinkActive="text-blue-400"-->
+<!--             class="text-gray-300 hover:text-blue-400 px-3 py-2 text-sm font-medium transition-colors">-->
+<!--            Portails-->
+<!--          </a>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </nav>-->
+<!--  </header>-->
 
-  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+<!--  <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">-->
+<!--    <router-outlet></router-outlet>-->
+<!--  </main>-->
+<!--</div>-->
+<div class="bg-background text-text-primary min-h-screen flex flex-col">
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    <h2 class="text-xl font-semibold mb-4">Live Chat</h2>
     <router-outlet></router-outlet>
   </main>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
 </div>

@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  version: '1.0.0',
   SOCKET_ENDPOINT: 'http://localhost:3000',
   SERVER_HOST: "http://localhost",
   SERVER_PORT: 3000,

@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  version: '1.0.0',
   SOCKET_ENDPOINT: 'http://monsite.com:3400',
   SERVER_HOST: 'monsite.com',
   SERVER_PORT: 3400,
