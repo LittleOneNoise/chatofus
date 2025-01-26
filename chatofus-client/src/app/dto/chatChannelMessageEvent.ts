@@ -78,7 +78,7 @@ export interface ObjectItemInventory {
 // Interface mère
 export interface ChatChannelMessageEvent {
   content: string;
-  channel: Channel;
+  channel: string;
   date: string;
   senderCharacterId: number;
   senderAccountId: number;

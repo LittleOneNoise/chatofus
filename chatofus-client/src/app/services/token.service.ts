@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { v4 as uuidv4 } from 'uuid';
-import { UserToken } from './userToken';
+import {Injectable} from '@angular/core';
+import {v4 as uuidv4} from 'uuid';
+import {UserToken} from './userToken';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,10 @@ export class TokenService {
   getUserToken(): string {
     const storedToken: UserToken | null = this.getStoredToken();
 
+    console.log(`Récupération de token`)
+
     if (storedToken && !this.isTokenExpired(storedToken)) {
+      console.log(storedToken.value);
       return storedToken.value;
     }
 
@@ -45,6 +48,7 @@ export class TokenService {
     };
 
     localStorage.setItem(this.TOKEN_KEY, JSON.stringify(token));
+    console.log(token.value);
     return token.value;
   }
 

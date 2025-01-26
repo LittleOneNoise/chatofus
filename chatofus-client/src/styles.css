@@ -5,3 +5,30 @@
 .active {
   @apply px-4 py-2 rounded-full text-sm font-semibold bg-primary text-background transition hover:bg-primary-light;
 }
+.channel-filter .active {
+  @apply bg-primary-light;
+}
+.channel-filter button {
+  @apply px-4 py-2 rounded text-sm font-semibold transition;
+}
+
+.channel-filter button.active {
+  @apply text-background font-bold shadow-md; /* Texte blanc, police en gras, ombre */
+}
+
+.channel-filter button.inactive {
+  @apply bg-background-secondary border border-primary-light text-primary-light; /* Fond neutre et contour léger */
+  @apply opacity-50 border border-gray-700 hover:opacity-75;
+}
+.messages-container {
+  @apply flex-1 overflow-y-auto;
+}
+.message {
+  @apply p-2 border-b border-background-secondary;
+}
+.message img {
+  transition: opacity 0.3s ease-in-out;
+}
+.message img.loading {
+  opacity: 0.5;
+}

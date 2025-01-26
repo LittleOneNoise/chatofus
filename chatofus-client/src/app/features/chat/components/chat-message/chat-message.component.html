@@ -1,31 +1,49 @@
-<div class="p-3 rounded-lg transition-colors hover:bg-gray-700" [ngClass]="getChannelClass(message.channel)">
-  <div class="flex items-baseline gap-2">
-    <span class="text-xs text-gray-500 min-w-14">
-      {{ message.date | date:'HH:mm:ss' }}
+<div class="message flex items-center space-x-3 p-2">
+  <!-- Timestamp -->
+  <span class="timestamp text-chat-time text-xs flex-shrink-0">
+    [{{ message.date | date: 'HH:mm:ss' }}]
+  </span>
+
+  <!-- Player Icon and Level -->
+  <div class="flex items-center space-x-1 flex-shrink-0">
+
+    <ng-container *ngIf="playerInfo$ | async as playerInfo; else loadingState">
+      <img
+        [alt]="playerInfo.class"
+        [class.loading]="loading"
+        [ngSrc]="'/heads/' + (playerInfo.class | lowercase) + '.png'"
+        [title]="playerInfo.class"
+        class="w-5 h-5 object-contain flex-shrink-0"
+        height="20"
+        loading="lazy"
+        width="20"
+      />
+      <span class="bg-gray-600 text-gray-200 text-xs px-1.5 py-0.5 rounded flex-shrink-0">
+      {{ playerInfo.level ?? '???' }}
     </span>
-    <div class="flex items-center gap-2">
-      <ng-container *ngIf="playerInfo$ | async as playerInfo; else loadingState">
-        <img
-          [src]="getRaceIcon(playerInfo.class)"
-          [alt]="playerInfo.class"
-          class="w-5 h-5"
-          [title]="playerInfo.class">
-        <span class="bg-gray-600 text-gray-200 text-xs px-1.5 py-0.5 rounded">
-          {{ playerInfo.level ?? '???' }}
-        </span>
-      </ng-container>
-      <ng-template #loadingState>
-        <div class="w-5 h-5 animate-pulse bg-gray-600 rounded-full"></div>
-        <div class="w-8 h-4 animate-pulse bg-gray-600 rounded"></div>
-      </ng-template>
-      <span
-        class="font-medium"
-        [style.color]="getUsernameColor(message.senderName)">
-          {{ message.senderName }}
-      </span>
-    </div>
+    </ng-container>
+
+    <!-- Loading State -->
+    <ng-template #loadingState>
+      <div class="w-5 h-5 animate-pulse bg-gray-600 rounded-full flex-shrink-0"></div>
+      <div class="w-8 h-4 animate-pulse bg-gray-600 rounded flex-shrink-0"></div>
+    </ng-template>
+
   </div>
-  <div class="pl-4 border-l-2 border-gray-600 mt-2 ml-14">
-    <p class="text-gray-300" [innerHTML]="message.content | highlight:highlightWords"></p>
+
+  <!-- Channel, Player Name, and Message -->
+  <div class="flex items-center space-x-2">
+    <span class="channel text-sm text-chat-time font-medium flex-shrink-0">
+      {{ message.channel }}
+    </span>
+    <span
+      [ngClass]="'text-chat-channel-' + message.channel.toLowerCase()"
+      class="player text-sm font-bold flex-shrink-0"
+    >
+      {{ message.senderName }}
+    </span>
+    <span class="content text-sm text-chat-message">
+      {{ message.content }}
+    </span>
   </div>
 </div>

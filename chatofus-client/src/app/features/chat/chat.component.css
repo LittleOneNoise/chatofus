@@ -15,3 +15,6 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #6b7280;
 }
+.messages-container {
+  @apply flex-1 overflow-y-auto max-h-[70vh]; /* Limite la hauteur à 70% de la hauteur de la fenêtre */
+}

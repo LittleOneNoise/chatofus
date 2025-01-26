@@ -4,151 +4,98 @@ import {SocketService} from '../../services/socket.service';
 import {Socket} from 'socket.io-client';
 import {CommonModule} from '@angular/common';
 import {ChatMessageComponent} from './components/chat-message/chat-message.component';
-import {chatAnimations} from './chat.animations';
-import {CHANNEL_CONFIG, ChannelInfo} from '../../models/channel-info.model';
+import {ChannelFilterComponent} from './components/channel-filter/channel-filter.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, ChatMessageComponent],
+  imports: [CommonModule, ChatMessageComponent, ChannelFilterComponent],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.css',
-  animations: chatAnimations
+  styleUrl: './chat.component.css'
 })
 export class ChatComponent {
 
-  readonly CHANNEL_CONFIG = CHANNEL_CONFIG;
   messages: ChatChannelMessageEvent[] = [];
-  activeChannels = new Set<Channel>(this.getChannelValues());
-  highlightWords: string[] = [];
+  filteredMessages: ChatChannelMessageEvent[] = [];
+  unreadMessages = 0;
+  autoScrollEnabled = true;
+  activeChannels: Channel[] = [Channel.SEEK, Channel.SALES, Channel.EVENT, Channel.INFO, Channel.ADS, Channel.ADMIN];
   private socket: Socket | null = null;
-  private isScrolledToBottom = true;
-  private chatContainer: HTMLElement | null = null;
-  hasUnreadMessages = false;
-  protected unreadMessagesCount = 0;
-  readonly Channel = Channel;
+  private readonly MAX_MESSAGES = 200;
 
   constructor(private socketService: SocketService) {}
 
   ngOnInit(): void {
     this.socket = this.socketService.connect();
 
-    setTimeout(() => {
-      this.chatContainer = document.querySelector('.overflow-y-auto');
-      this.setupScrollListener();
-    }, 0);
-
     if (this.socket) {
       this.socket.on('newMessage', (message: ChatChannelMessageEvent) => {
-        this.messages = [...this.messages, message];
+        console.log(`[WebsocketEvent] newMessage`);
+        console.log(message);
+        this.messages.push(message);
 
-        if (this.isScrolledToBottom) {
+        if (this.messages.length > this.MAX_MESSAGES) {
+          this.messages.shift();
+        }
+
+        this.filterMessages();
+
+        if (this.autoScrollEnabled) {
           this.scrollToBottom();
         } else {
-          this.hasUnreadMessages = true;
-          this.unreadMessagesCount++;
+          this.unreadMessages++;
         }
       });
     }
   }
 
-  private setupScrollListener(): void {
-    if (!this.chatContainer) return;
-
-    this.chatContainer.addEventListener('scroll', () => {
-      if (!this.chatContainer) return;
-
-      const isNearBottom = this.chatContainer.scrollHeight - this.chatContainer.scrollTop - this.chatContainer.clientHeight < 50;
-
-      if (this.isScrolledToBottom !== isNearBottom) {
-        this.isScrolledToBottom = isNearBottom;
-        if (isNearBottom) {
-          this.hasUnreadMessages = false;
-          this.unreadMessagesCount = 0;
-        }
-      }
+  filterMessages(): void {
+    console.log(`Messages AVANT`);
+    console.log(this.filteredMessages);
+    this.filteredMessages = this.messages.filter(message => {
+      const channelEnum = this.mapStringToChannel(message.channel); // Conversion de string à enum
+      return channelEnum !== undefined && this.activeChannels.includes(channelEnum);
     });
+    console.log(`Messages APRES`);
+    console.log(this.filteredMessages);
   }
 
-  scrollToBottom(): void {
-    setTimeout(() => {
-      if (this.chatContainer) {
-        this.chatContainer.scrollTop = this.chatContainer.scrollHeight;
-        this.hasUnreadMessages = false;
-        this.unreadMessagesCount = 0;
-      }
-    }, 0);
-  }
-
-  get filteredMessages(): ChatChannelMessageEvent[] {
-    return this.messages.filter(msg => this.activeChannels.has(msg.channel));
-  }
-
-  getChannelInfo(channel: Channel): ChannelInfo {
-    return CHANNEL_CONFIG[channel];
-  }
-
-  private getChannelValues(): Channel[] {
-    return Object.values(Channel).filter((v): v is Channel => typeof v === 'number');
-  }
-
-  get availableChannels(): Channel[] {
-    return this.getChannelValues();
+  mapStringToChannel(channelString: string): Channel | undefined {
+    // Vérifie si la chaîne correspond à une clé dans l'énumération Channel
+    const key = channelString.toUpperCase() as keyof typeof Channel;
+    return Channel[key];
   }
 
   toggleChannel(channel: Channel): void {
-    if (this.activeChannels.has(channel)) {
-      this.activeChannels.delete(channel);
+    if (this.activeChannels.includes(channel)) {
+      this.activeChannels = this.activeChannels.filter(c => c !== channel);
     } else {
-      this.activeChannels.add(channel);
+      this.activeChannels.push(channel);
+    }
+    this.filterMessages();
+  }
+
+  onScroll(event: Event): void {
+    const target = event.target as HTMLElement;
+    const isAtBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 5; // Marge de 5px
+
+    this.autoScrollEnabled = isAtBottom;
+    if (isAtBottom) {
+      this.unreadMessages = 0;
     }
   }
 
-  getChannelName(channel: Channel): string {
-    const channelNames: Record<Channel, string> = {
-      [Channel.GLOBAL]: 'Global',
-      [Channel.TEAM]: 'Team',
-      [Channel.GUILD]: 'Guilde',
-      [Channel.ALLIANCE]: 'Alliance',
-      [Channel.PARTY]: 'Groupe',
-      [Channel.SALES]: 'Ventes',
-      [Channel.SEEK]: 'Recherche',
-      [Channel.NOOB]: 'Débutant',
-      [Channel.ADMIN]: 'Admin',
-      [Channel.ARENA]: 'Arène',
-      [Channel.PRIVATE]: 'Privé',
-      [Channel.INFO]: 'Info',
-      [Channel.FIGHT_LOG]: 'Combat',
-      [Channel.ADS]: 'Annonces',
-      [Channel.EVENT]: 'Événement',
-      [Channel.EXCHANGE]: 'Échange'
-    };
-
-    return channelNames[channel];
+  scrollToBottom(): void {
+    const container = document.querySelector('.messages-container');
+    container?.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
   }
 
-  get channelDisplay(): string {
-    return Array.from(this.activeChannels)
-      .map(channel => this.getChannelName(channel))
-      .join(', ') || 'Aucun canal';
-  }
-
-  updateHighlightWords(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const words = input.value;
-    this.highlightWords = words
-      .toLowerCase()
-      .split(',')
-      .map(word => word.trim())
-      .filter(word => word.length > 0);
+  ngAfterViewChecked(): void {
+    if (this.autoScrollEnabled) {
+      this.scrollToBottom();
+    }
   }
 
   ngOnDestroy(): void {
-    if (this.chatContainer) {
-      this.chatContainer.removeEventListener('scroll', () => {});
-    }
     this.socket?.disconnect();
   }
-
-  protected readonly Object = Object;
-  protected readonly Array = Array;
 }

@@ -1,6 +1,7 @@
 import {
   Controller,
   Get,
+  Logger,
   NotFoundException,
   Param,
   UseInterceptors,
@@ -13,6 +14,8 @@ import { PlayerInfoParamDto } from './dto/player-info-param.dto';
 @UseInterceptors(CacheInterceptor)
 @Controller('player-info')
 export class PlayerInfoController {
+  private readonly logger = new Logger(PlayerInfoController.name);
+
   constructor(private readonly playerInfoService: PlayerInfoService) {}
 
   @Get(':name')
@@ -22,6 +25,7 @@ export class PlayerInfoController {
     const playerInfo = await this.playerInfoService.getPlayerInfo(params.name);
 
     if (!playerInfo.class && !playerInfo.level) {
+      this.logger.error(`Player '${params.name}' not found`);
       throw new NotFoundException(`Player '${params.name}' not found`);
     }
 

@@ -11,9 +11,15 @@ import { LoggerService } from './common/logger/logger.service';
 import { PlayerInfoController } from './modules/player-info/player-info.controller';
 import { PlayerInfoModule } from './modules/player-info/player-info.module';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ChatModule, PlayerInfoModule, CacheModule.register()],
+  imports: [
+    ChatModule,
+    PlayerInfoModule,
+    CacheModule.register(),
+    ConfigModule.forRoot({ isGlobal: true }),
+  ],
   controllers: [AppController, PlayerInfoController],
   providers: [AppService, LoggerService],
 })

@@ -1,0 +1,11 @@
+<div class="channel-filter flex space-x-2 p-2 bg-background-secondary text-text-primary">
+  <button
+    (click)="toggleChannel(channel.id)"
+    *ngFor="let channel of channels"
+    [class.active]="activeChannels.includes(channel.id)"
+    [class.inactive]="!activeChannels.includes(channel.id)"
+    [ngClass]="activeChannels.includes(channel.id) ? 'bg-chat-channel-' + channel.className : ''"
+    class="transition">
+    {{ channel.label }}
+  </button>
+</div>
