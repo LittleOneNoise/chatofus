@@ -48,8 +48,8 @@ export class PlayerInfoService {
     });
 
     const urls = [
-      `https://www.dofus.com/fr/mmorpg/communaute/ladder/succes?servers=NEW_MONO_ACCOUNT&name=${encodeURIComponent(playerName)}`,
-      `https://www.dofus.com/fr/mmorpg/communaute/ladder/general?servers=NEW_MONO_ACCOUNT&name=${encodeURIComponent(playerName)}`,
+      `https://www.dofus.com/fr/mmorpg/communaute/ladder/succes?servers=MONO_ACCOUNT&name=${encodeURIComponent(playerName)}`,
+      `https://www.dofus.com/fr/mmorpg/communaute/ladder/general?servers=MONO_ACCOUNT&name=${encodeURIComponent(playerName)}`,
     ];
 
     try {

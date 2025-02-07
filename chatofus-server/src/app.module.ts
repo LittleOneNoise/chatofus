@@ -12,6 +12,7 @@ import { PlayerInfoController } from './modules/player-info/player-info.controll
 import { PlayerInfoModule } from './modules/player-info/player-info.module';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
     PlayerInfoModule,
     CacheModule.register(),
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [AppController, PlayerInfoController],
   providers: [AppService, LoggerService],

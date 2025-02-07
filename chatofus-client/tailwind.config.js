@@ -23,6 +23,10 @@ module.exports = {
           channel : {
             seek: '#a26fb7',
             sales: '#ab7a2d',
+            event: '#2d64ab',
+            info: '#2dab51',
+            ads: '#572dab',
+            admin: '#ab2d2d'
           }
         },
       },
@@ -31,6 +35,9 @@ module.exports = {
   safelist: [
     {
       pattern: /^bg-chat-channel-(seek|sales|event|info|ads|admin)$/,
+    },
+    {
+      pattern: /^text-chat-channel-(seek|sales|event|info|ads|admin)$/,
     },
   ],
   plugins: [],
