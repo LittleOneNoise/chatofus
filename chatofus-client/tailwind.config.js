@@ -23,10 +23,15 @@ module.exports = {
           channel : {
             seek: '#a26fb7',
             sales: '#ab7a2d',
-            event: '#2d64ab',
             info: '#2dab51',
-            ads: '#572dab',
-            admin: '#ab2d2d'
+          },
+          dynamic : {
+            monstergroup: '#44c36a',
+            chatachievement: '#f1ef63',
+            subarea: '#b863f1',
+            map: '#b863f1',
+            chatitem: '#1a8dd3',
+            guild: '#d59837',
           }
         },
       },
@@ -34,10 +39,10 @@ module.exports = {
   },
   safelist: [
     {
-      pattern: /^bg-chat-channel-(seek|sales|event|info|ads|admin)$/,
+      pattern: /^bg-chat-channel-(seek|sales|info)$/,
     },
     {
-      pattern: /^text-chat-channel-(seek|sales|event|info|ads|admin)$/,
+      pattern: /^text-chat-channel-(seek|sales|info)$/,
     },
   ],
   plugins: [],

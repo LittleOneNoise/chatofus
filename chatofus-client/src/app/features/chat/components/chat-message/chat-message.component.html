@@ -33,9 +33,9 @@
 
   <!-- Channel, Player Name, and Message -->
   <div class="flex items-center space-x-2">
-    <span class="channel text-sm text-chat-time font-medium flex-shrink-0">
+    <!--<span class="channel text-sm text-chat-time font-medium flex-shrink-0">
       {{ message.channel }}
-    </span>
+    </span>-->
     <span
       [ngClass]="'text-chat-channel-' + message.channel.toLowerCase()"
       class="player text-sm font-bold flex-shrink-0"
@@ -45,5 +45,16 @@
     <span class="content text-sm text-chat-message">
       {{ message.content }}
     </span>
+    <ng-container *ngFor="let segment of segments">
+      <!-- Affichage du texte brut -->
+      <ng-container *ngIf="segment.type === 'text'">
+        {{ segment.content }}
+      </ng-container>
+      <!-- Affichage du composant dynamique pour les tokens -->
+      <ng-container *ngIf="segment.type !== 'text'">
+        <ng-container *ngComponentOutlet="getComponent(segment.type); inputs: segment.data">
+        </ng-container>
+      </ng-container>
+    </ng-container>
   </div>
 </div>

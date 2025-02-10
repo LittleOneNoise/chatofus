@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Channel} from '../../../../dto/chatChannelMessageEvent';
-import {NgClass, NgForOf} from '@angular/common';
+import {NgForOf} from '@angular/common';
+import {FilterButtonComponent} from '../filter-button/filter-button.component';
 
 @Component({
   selector: 'app-channel-filter',
   imports: [
     NgForOf,
-    NgClass
+    FilterButtonComponent
   ],
   templateUrl: './channel-filter.component.html',
   styleUrl: './channel-filter.component.css'
@@ -19,10 +20,7 @@ export class ChannelFilterComponent {
   channels: { id: Channel; label: string; className: string }[] = [
     { id: Channel.SEEK, label: 'Recrutement', className: 'seek' },
     { id: Channel.SALES, label: 'Commerce', className: 'sales' },
-    { id: Channel.EVENT, label: 'Evénement', className: 'event' },
-    { id: Channel.INFO, label: 'Informations', className: 'info' },
-    { id: Channel.ADS, label: 'Promotions', className: 'ads' },
-    { id: Channel.ADMIN, label: 'Admin', className: 'admin' }
+    { id: Channel.INFO, label: 'Informations', className: 'info' }
   ];
 
   toggleChannel(channel: Channel): void {

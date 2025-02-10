@@ -1,0 +1,7 @@
+.active-button {
+  @apply text-background font-semibold shadow-md px-4 py-2 rounded-full text-sm transition;
+}
+
+.inactive-button {
+  @apply bg-background-secondary border border-primary-light text-primary-light opacity-50 hover:opacity-75 px-4 py-2 rounded-full text-sm font-semibold transition;
+}

@@ -18,7 +18,7 @@ export class ChatComponent {
   filteredMessages: ChatChannelMessageEvent[] = [];
   unreadMessages = 0;
   autoScrollEnabled = true;
-  activeChannels: Channel[] = [Channel.SEEK, Channel.SALES, Channel.EVENT, Channel.INFO, Channel.ADS, Channel.ADMIN];
+  activeChannels: Channel[] = [Channel.SEEK, Channel.SALES, Channel.INFO];
   private socket: Socket | null = null;
   private readonly MAX_MESSAGES = 200;
 
@@ -29,8 +29,6 @@ export class ChatComponent {
 
     if (this.socket) {
       this.socket.on('newMessage', (message: ChatChannelMessageEvent) => {
-        console.log(`[WebsocketEvent] newMessage`);
-        console.log(message);
         this.messages.push(message);
 
         if (this.messages.length > this.MAX_MESSAGES) {
@@ -49,14 +47,10 @@ export class ChatComponent {
   }
 
   filterMessages(): void {
-    console.log(`Messages AVANT`);
-    console.log(this.filteredMessages);
     this.filteredMessages = this.messages.filter(message => {
       const channelEnum = this.mapStringToChannel(message.channel); // Conversion de string à enum
       return channelEnum !== undefined && this.activeChannels.includes(channelEnum);
     });
-    console.log(`Messages APRES`);
-    console.log(this.filteredMessages);
   }
 
   mapStringToChannel(channelString: string): Channel | undefined {
