@@ -1,1 +1,8 @@
-<p>chat-module-map works!</p>
+<span class="text-chat-dynamic-map">
+  <ng-container *ngIf="label">
+  {{ position_x }}, {{ position_y }} [{{ label }}]
+    </ng-container>
+  <ng-container *ngIf="!label">
+  [{{ position_x }}, {{ position_y }}]
+    </ng-container>
+</span>

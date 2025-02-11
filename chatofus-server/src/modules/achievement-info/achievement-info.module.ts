@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { PlayerInfoService } from './player-info.service';
-import { PlayerInfoController } from './player-info.controller';
+import { AchievementInfoService } from './achievement-info.service';
+import { AchievementInfoController } from './achievement-info.controller';
 import { HttpModule } from '@nestjs/axios';
 import { CacheModule } from '@nestjs/cache-manager';
 
@@ -13,8 +13,8 @@ import { CacheModule } from '@nestjs/cache-manager';
       isGlobal: true,
     }),
   ],
-  controllers: [PlayerInfoController],
-  providers: [PlayerInfoService],
-  exports: [PlayerInfoService],
+  controllers: [AchievementInfoController],
+  providers: [AchievementInfoService],
+  exports: [AchievementInfoService],
 })
-export class PlayerInfoModule {}
+export class AchievementInfoModule {}

@@ -31,30 +31,29 @@
 
   </div>
 
-  <!-- Channel, Player Name, and Message -->
   <div class="flex items-center space-x-2">
-    <!--<span class="channel text-sm text-chat-time font-medium flex-shrink-0">
-      {{ message.channel }}
-    </span>-->
+  <!-- Pseudo -->
     <span
       [ngClass]="'text-chat-channel-' + message.channel.toLowerCase()"
       class="player text-sm font-bold flex-shrink-0"
     >
       {{ message.senderName }}
     </span>
-    <span class="content text-sm text-chat-message">
-      {{ message.content }}
-    </span>
-    <ng-container *ngFor="let segment of segments">
+
+    <!-- Message -->
+    <div class="flex items-center space-x-1">
+    <ng-container *ngFor="let segment of segments; trackBy: trackSegment">
       <!-- Affichage du texte brut -->
       <ng-container *ngIf="segment.type === 'text'">
-        {{ segment.content }}
+        <span class="content text-sm text-chat-message">{{ segment.content }}</span>
       </ng-container>
       <!-- Affichage du composant dynamique pour les tokens -->
       <ng-container *ngIf="segment.type !== 'text'">
-        <ng-container *ngComponentOutlet="getComponent(segment.type); inputs: segment.data">
-        </ng-container>
+        <span class="font-semibold">
+          <ng-container *ngComponentOutlet="getComponent(segment.type); inputs: segment.data"></ng-container>
+        </span>
       </ng-container>
     </ng-container>
+    </div>
   </div>
 </div>

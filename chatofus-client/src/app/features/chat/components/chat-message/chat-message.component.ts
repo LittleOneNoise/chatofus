@@ -60,6 +60,10 @@ export class ChatMessageComponent implements OnChanges {
     return this.tokenComponents[tokenType] || null;
   }
 
+  trackSegment(index: number, segment: Segment): any {
+    return index;
+  }
+
 
 
 }
