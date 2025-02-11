@@ -15,17 +15,25 @@ import { ConfigModule } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AchievementInfoController } from './modules/achievement-info/achievement-info.controller';
 import { AchievementInfoModule } from './modules/achievement-info/achievement-info.module';
+import { SubareaInfoModule } from './modules/subarea-info/subarea-info.module';
+import { SubareaInfoController } from './modules/subarea-info/subarea-info.controller';
 
 @Module({
   imports: [
     ChatModule,
     PlayerInfoModule,
     AchievementInfoModule,
+    SubareaInfoModule,
     CacheModule.register(),
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
   ],
-  controllers: [AppController, PlayerInfoController, AchievementInfoController],
+  controllers: [
+    AppController,
+    PlayerInfoController,
+    AchievementInfoController,
+    SubareaInfoController,
+  ],
   providers: [AppService, LoggerService],
 })
 export class AppModule implements NestModule {

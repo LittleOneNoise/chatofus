@@ -15,7 +15,7 @@ export class ChatTokenizerService {
    * Analyse le message et retourne un tableau de segments.
    */
   tokenize(message: string): Segment[] {
-    message = message.replace(/\u200b/g, '');
+    message = message.replace(/\\u200b/g, '');
     const segments: Segment[] = [];
     const regex = /\{([^}]+)\}/g; // détecte les tokens délimités par { }
     let lastIndex = 0;
@@ -66,15 +66,15 @@ export class ChatTokenizerService {
           console.log(`tokenData.position_y : ${tokenData.position_y}`);
           console.log(`tokenData.label : ${tokenData.label}`);
         }
-        // {monsterGroup,linkColor:#E2ACECFF,6,13,1,0,-20001;0;4x5086x190|3x3567x191|1x3568x185|5x3569x197,Sans Visage}
+        // {chatachievement,linkColor:#E2ACECFF,6263}
         else if (tokenType === 'chatachievement') {
           tokenData.achievementId = parts[2];
           console.log(`tokenData.achievementId : ${tokenData.achievementId}`);
         }
         // {subArea,13}
         else if (tokenType === 'subArea') {
-          tokenData.areaId = parts[1];
-          console.log(`tokenData.areaId : ${tokenData.areaId}`);
+          tokenData.subareaId = parts[1];
+          console.log(`tokenData.areaId : ${tokenData.subareaId}`);
         }
         // {map,linkColor:#E2ACECFF,-65,-61,1,Portail vers la dimension Enutrosor ,True}
         // {map,-56,16,10}

@@ -27,7 +27,7 @@ module.exports = {
           },
           dynamic : {
             monstergroup: '#44c36a',
-            chatachievement: '#9b9930',
+            chatachievement: '#b5ac2c',
             subarea: '#b863f1',
             map: '#b863f1',
             chatitem: '#5984c7',

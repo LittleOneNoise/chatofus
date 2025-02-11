@@ -41,7 +41,7 @@
     </span>
 
     <!-- Message -->
-    <div class="flex items-center space-x-1">
+    <div class="flex items-center space-x-1 flex-wrap">
     <ng-container *ngFor="let segment of segments; trackBy: trackSegment">
       <!-- Affichage du texte brut -->
       <ng-container *ngIf="segment.type === 'text'">
@@ -49,7 +49,7 @@
       </ng-container>
       <!-- Affichage du composant dynamique pour les tokens -->
       <ng-container *ngIf="segment.type !== 'text'">
-        <span class="font-semibold">
+        <span class="font-semibold text-nowrap">
           <ng-container *ngComponentOutlet="getComponent(segment.type); inputs: segment.data"></ng-container>
         </span>
       </ng-container>
