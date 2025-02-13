@@ -1,1 +1,7 @@
-<span class="text-chat-dynamic-monstergroup">{{ label }} [{{ position_x }},{{ position_y }}]</span>
+<span *ngIf="label != null; else nullTemplate" class="text-chat-dynamic-monstergroup">
+  {{ label }} [{{ position_x }},{{ position_y }}]
+</span>
+
+<ng-template #nullTemplate>
+  <span class="text-chat-dynamic-monstergroup">null</span>
+</ng-template>

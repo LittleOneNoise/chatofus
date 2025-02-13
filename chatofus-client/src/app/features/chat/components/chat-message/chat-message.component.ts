@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, Type} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, Type} from '@angular/core';
 import {CommonModule, NgComponentOutlet, NgOptimizedImage} from '@angular/common';
 import {ChatChannelMessageEvent} from '../../../../dto/chatChannelMessageEvent';
 import {finalize, Observable, of} from 'rxjs';
@@ -12,6 +12,7 @@ import {ChatModuleSubAreaComponent} from '../chat-module-sub-area/chat-module-su
 import {ChatModuleMapComponent} from '../chat-module-map/chat-module-map.component';
 import {ChatModuleGuildComponent} from '../chat-module-guild/chat-module-guild.component';
 import {ChatModuleChatItemComponent} from '../chat-module-chat-item/chat-module-chat-item.component';
+import {ChatModuleAllianceComponent} from '../chat-module-alliance/chat-module-alliance.component';
 
 @Component({
   selector: 'app-chat-message',
@@ -19,7 +20,7 @@ import {ChatModuleChatItemComponent} from '../chat-module-chat-item/chat-module-
   templateUrl: './chat-message.component.html',
   styleUrl: './chat-message.component.css'
 })
-export class ChatMessageComponent implements OnChanges {
+export class ChatMessageComponent implements OnChanges, OnInit {
   @Input() message!: ChatChannelMessageEvent;
   playerInfo$: Observable<PlayerInfo | null> = of(null);
   loading = false;
@@ -32,7 +33,8 @@ export class ChatMessageComponent implements OnChanges {
     subArea: ChatModuleSubAreaComponent,
     map: ChatModuleMapComponent,
     guild: ChatModuleGuildComponent,
-    chatitem: ChatModuleChatItemComponent
+    chatitem: ChatModuleChatItemComponent,
+    alliance: ChatModuleAllianceComponent
   };
 
   constructor(private playerInfoService: PlayerInfoService,

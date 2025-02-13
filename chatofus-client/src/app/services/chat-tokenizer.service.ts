@@ -28,7 +28,8 @@ export class ChatTokenizerService {
       'subArea',
       'map',
       'guild',
-      'chatitem'
+      'chatitem',
+      'alliance'
     ];
 
     while ((match = regex.exec(message)) !== null) {
@@ -81,7 +82,7 @@ export class ChatTokenizerService {
         else if (tokenType === 'map') {
           tokenData.position_x = parts.length > 4 ? parts[2] : parts[1];
           tokenData.position_y = parts.length > 4 ? parts[3] : parts[2];
-          tokenData.label = parts.length > 4 ? parts[5] : undefined;
+          tokenData.label = parts.length > 4 ? parts[5] : null;
           console.log(`tokenData.position_x : ${tokenData.position_x}`);
           console.log(`tokenData.position_y : ${tokenData.position_y}`);
           console.log(`tokenData.label : ${tokenData.label}`);
@@ -103,6 +104,19 @@ export class ChatTokenizerService {
           }
           console.log(`tokenData.label : ${tokenData.label}`);
         }
+        // {alliance,6fc8d9b1-2ca6-4477-9a83-526a64ad34af,True,True,True::OLD}
+        else if (tokenType === 'alliance') {
+          tokenData.label = null;
+          const regex = /::(.*?)/;
+          console.log(`parts[4] : ${parts[4]}`);
+          const allianceName = parts[4].match(regex);
+          console.log(allianceName);
+          if (allianceName) {
+            tokenData.label = allianceName[1];
+          }
+          console.log(`tokenData.label : ${tokenData.label}`);
+        }
+
         // Ajoute le segment de token au tableau
         segments.push({
           type: tokenType, data: tokenData

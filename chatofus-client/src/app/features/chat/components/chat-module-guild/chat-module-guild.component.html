@@ -1,1 +1,7 @@
-<span class="text-chat-dynamic-guild">[{{ label }}]</span>
+<span *ngIf="label != null; else nullTemplate" class="text-chat-dynamic-guild">
+  [{{ label }}]
+</span>
+
+<ng-template #nullTemplate>
+  <span class="text-chat-dynamic-guild">null</span>
+</ng-template>

@@ -11,7 +11,7 @@ import {NgIf} from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatModuleMapComponent {
-  @Input() position_x: string = '0';
-  @Input() position_y: string = '0';
-  @Input() label: string | undefined = undefined;
+  @Input() position_x: string | null = null;
+  @Input() position_y: string | null = null;
+  @Input() label: string | null = null;
 }

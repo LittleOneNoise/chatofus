@@ -1,0 +1,7 @@
+<span *ngIf="label != null; else nullTemplate" class="text-chat-dynamic-alliance">
+  [{{ label }}]
+</span>
+
+<ng-template #nullTemplate>
+  <span class="text-chat-dynamic-alliance">null</span>
+</ng-template>

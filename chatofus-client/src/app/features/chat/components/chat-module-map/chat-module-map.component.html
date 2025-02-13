@@ -1,8 +1,7 @@
-<span class="text-chat-dynamic-map">
-  <ng-container *ngIf="label">
-  {{ position_x }},{{ position_y }} [{{ label }}]
-    </ng-container>
-  <ng-container *ngIf="!label">
-  [{{ position_x }},{{ position_y }}]
-    </ng-container>
+<span *ngIf="label != null || (position_x != null && position_y != null); else nullTemplate" class="text-chat-dynamic-map">
+  {{ label }} [{{ position_x }},{{ position_y }}]
 </span>
+
+<ng-template #nullTemplate>
+  <span class="text-chat-dynamic-map">null</span>
+</ng-template>

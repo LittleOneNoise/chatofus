@@ -1,1 +1,13 @@
-<span class="text-chat-dynamic-chatachievement">[{{ achievementLabel$ | async }}]</span>
+<ng-container *ngIf="achievementLabel$ | async as label; else loading">
+  <span *ngIf="label != null; else showNull" class="text-chat-dynamic-chatachievement">
+    [{{ label }}]
+  </span>
+</ng-container>
+
+<ng-template #loading>
+  <span class="text-chat-dynamic-chatachievement">loading...</span>
+</ng-template>
+
+<ng-template #showNull>
+  <span class="text-chat-dynamic-chatachievement">null</span>
+</ng-template>

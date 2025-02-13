@@ -1,12 +1,13 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {map, Observable, of} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, NgIf} from '@angular/common';
 import {DofusdbService} from '../../../../services/dofusdb.service';
 
 @Component({
   selector: 'app-chat-module-chat-achievement',
   imports: [
-    AsyncPipe
+    AsyncPipe,
+    NgIf
   ],
   templateUrl: './chat-module-chat-achievement.component.html',
   styleUrl: './chat-module-chat-achievement.component.css',

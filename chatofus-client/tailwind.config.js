@@ -32,6 +32,7 @@ module.exports = {
             map: '#b863f1',
             chatitem: '#5984c7',
             guild: '#d59837',
+            alliance: '#22978d',
           }
         },
       },
