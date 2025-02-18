@@ -1,0 +1,37 @@
+<div class="bg-[#2f2b27] text-[#f0d79e] border border-[#3a3530] rounded-md p-4 w-96">
+  <!-- En-tête de la carte -->
+  <div class="flex items-center mb-4">
+    <img
+      alt="Portail Enutrosor"
+      class="w-12 h-12 mr-4"
+      height="347"
+      ngSrc="/portal/enutrosor.png"
+      width="164"/>
+    />
+    <h2 class="text-xl font-bold">
+      {{ portalLabel }} : [{{ portalPosX }},{{ portalPosY }}]
+    </h2>
+  </div>
+
+  <!-- Corps de la carte : infos sur la route -->
+  <div class="mb-2">
+    <span class="mr-2 text-[#c0b090]">[{{ nearestZaapPosX }},{{ nearestZaapPosY }}]</span>
+    <img
+      alt="Zaap"
+      class="inline-block w-5 h-5 mr-2"
+      height="62"
+      ngSrc="/portal/zaap.png"
+      width="62"/>
+    <span class="italic">
+      ({{ nearestZaapLabel }})
+    </span>
+  </div>
+
+  <!-- Pied de la carte : infos du joueur -->
+  <div class="flex items-center space-x-2">
+    <span class="font-bold text-[#d4af37]">{{ playerLevel }}</span>
+    <span class="text-[#ff80ff]">{{ playerPseudo }}</span>
+    <span>{{ playerMessage }}</span>
+  </div>
+</div>
+

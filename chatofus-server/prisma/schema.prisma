@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PortalType {
+  XELORIUM
+  ENUTROSOR
+  SRAMBAD
+  ECAFLIPUS
+}
+
+model PortalPosition {
+  id             Int        @id @default(autoincrement())
+  type           PortalType @unique
+  x              Int
+  y              Int
+  updatedAt      DateTime   @updatedAt @map("updated_at") @db.Timestamp(3)
+  pseudo         String
+  characterClass String     @map("character_class")
+  level          Int
+  messageChat    String     @map("message_chat")
+  nearestZaapId  Int        @map("nearest_zaap_id")
+  nearestZaap    Zaap       @relation(fields: [nearestZaapId], references: [id])
+
+  @@map(name: "portal_position")
+}
+
+model Zaap {
+  id              Int              @id @default(autoincrement())
+  x               Int
+  y               Int
+  name            String
+  portalPositions PortalPosition[]
+
+  @@map(name: "zaap")
+}
+
+model DevPortalPositionDataset {
+  id          Int        @id @default(autoincrement())
+  type        PortalType
+  updatedAt   DateTime   @updatedAt @map("updated_at") @db.Timestamp(3)
+  messageChat String     @map("message_chat")
+
+  @@map(name: "dev_portal_position_dataset")
+}

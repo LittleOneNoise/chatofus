@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {AfterViewChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {Channel, ChatChannelMessageEvent} from '../../dto/chatChannelMessageEvent';
 import {SocketService} from '../../services/socket.service';
 import {Socket} from 'socket.io-client';
@@ -12,7 +12,7 @@ import {ChannelFilterComponent} from './components/channel-filter/channel-filter
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
-export class ChatComponent {
+export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   messages: ChatChannelMessageEvent[] = [];
   filteredMessages: ChatChannelMessageEvent[] = [];

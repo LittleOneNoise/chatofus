@@ -17,6 +17,10 @@ import { AchievementInfoController } from './modules/achievement-info/achievemen
 import { AchievementInfoModule } from './modules/achievement-info/achievement-info.module';
 import { SubareaInfoModule } from './modules/subarea-info/subarea-info.module';
 import { SubareaInfoController } from './modules/subarea-info/subarea-info.controller';
+import { PortalsModule } from './modules/portals/portals.module';
+import { PrismaService } from './common/prisma/prisma.service';
+import { PrismaModule } from './common/prisma/prisma.module';
+import { PortalsService } from './modules/portals/portals.service';
 
 @Module({
   imports: [
@@ -27,6 +31,8 @@ import { SubareaInfoController } from './modules/subarea-info/subarea-info.contr
     CacheModule.register(),
     ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
+    PortalsModule,
+    PrismaModule,
   ],
   controllers: [
     AppController,
@@ -34,7 +40,7 @@ import { SubareaInfoController } from './modules/subarea-info/subarea-info.contr
     AchievementInfoController,
     SubareaInfoController,
   ],
-  providers: [AppService, LoggerService],
+  providers: [AppService, LoggerService, PrismaService, PortalsService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

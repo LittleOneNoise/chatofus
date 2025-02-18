@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {io, Socket} from 'socket.io-client';
-import { environment } from '../../../environments/environment';
+import {environment} from '../../../environments/environment';
 import {TokenService} from './token.service';
 import {BehaviorSubject, Observable} from 'rxjs';
 
@@ -16,7 +16,7 @@ export class SocketService {
   constructor(private tokenService: TokenService) { }
 
   public connect(): Socket {
-    if (!this.socket) {
+    if (!this.socket || !this.socket?.connected) {
       this.socket = io(environment.SOCKET_ENDPOINT, {
         query: {
           token: this.tokenService.getUserToken()
@@ -25,6 +25,10 @@ export class SocketService {
       this.setupConnectionListeners();
     }
     return this.socket;
+  }
+
+  isConnected(): boolean {
+    return this.connectionStatus.value;
   }
 
   private setupConnectionListeners() {
@@ -44,10 +48,6 @@ export class SocketService {
       this.connectionStatus.next(false);
       console.error('Erreur de connexion:', error);
     });
-  }
-
-  isConnected(): boolean {
-    return this.connectionStatus.value;
   }
 
 }
