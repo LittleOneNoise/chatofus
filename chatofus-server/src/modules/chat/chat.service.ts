@@ -3,6 +3,7 @@ import { ChatGateway } from './chat.gateway';
 import { ChatChannelMessageEvent } from './dto/chatChannelMessageEvent';
 import { jsonToDTO } from './mapper/chatChannelMessageEventMapper';
 import { PortalsService } from '../portals/portals.service';
+import { WantedService } from '../wanted/wanted.service';
 
 @Injectable()
 export class ChatService {
@@ -12,6 +13,7 @@ export class ChatService {
   constructor(
     private chatGateway: ChatGateway,
     private portalsService: PortalsService,
+    private wantedService: WantedService,
   ) {}
 
   addChatMessage(jsonInput: string): boolean {
@@ -25,15 +27,8 @@ export class ChatService {
         this.allowedChannels.includes(String(chatChannelMessageEvent.channel))
       ) {
         this.chatGateway.sendNewMessage(chatChannelMessageEvent);
-        // const chatChannelMessageEvent2: ChatChannelMessageEvent =
-        //   chatChannelMessageEvent;
-        // chatChannelMessageEvent2.content = `\u200b... \u200b .`;
-        // this.chatGateway.sendNewMessage(chatChannelMessageEvent2);
         this.portalsService.analyzeMessage(chatChannelMessageEvent);
-        // const chatChannelMessageEvent2: ChatChannelMessageEvent =
-        //   chatChannelMessageEvent;
-        // chatChannelMessageEvent2.content = `{map,linkColor:#E2ACECFF,21,-24,1,Portail vers la dimension Srambad ,True} `;
-        // this.portalsService.analyzeMessage(chatChannelMessageEvent2);
+        this.wantedService.analyzeMessage(chatChannelMessageEvent);
       } else {
         this.logger.warn(
           `Message de type [${chatChannelMessageEvent.channel}] non autorisé et ignoré`,

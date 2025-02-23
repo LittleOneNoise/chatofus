@@ -21,10 +21,6 @@ export class PortalsService {
         dimension,
         chatChannelMessageEvent?.content,
       ).then();
-    } else {
-      this.logger.warn(
-        `Pas de match de portail pour le message : ${chatChannelMessageEvent?.content}`,
-      );
     }
   }
 
@@ -41,12 +37,16 @@ export class PortalsService {
         typePortal = PortalType.XELORIUM;
         break;
       case 'enutrosor':
+      case 'enurado':
+      case 'anutropía':
         typePortal = PortalType.ENUTROSOR;
         break;
       case 'srambad':
+      case 'sramvil':
         typePortal = PortalType.SRAMBAD;
         break;
       case 'ecaflipus':
+      case 'zurcalia':
         typePortal = PortalType.ECAFLIPUS;
         break;
       default:

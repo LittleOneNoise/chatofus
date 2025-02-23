@@ -48,3 +48,14 @@ model DevPortalPositionDataset {
 
   @@map(name: "dev_portal_position_dataset")
 }
+
+model DevWantedDataset {
+  id                 Int      @id @default(autoincrement())
+  wantedName         String   @map("wanted_name")
+  updatedAt          DateTime @updatedAt @map("updated_at") @db.Timestamp(3)
+  messageChat        String   @map("message_chat")
+  confidenceIndex    Float    @map("confidence_index")
+  correspondanceList String   @default("") @map("correspondance_list")
+
+  @@map(name: "dev_wanted_dataset")
+}
