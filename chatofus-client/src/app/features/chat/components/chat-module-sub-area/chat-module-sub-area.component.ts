@@ -1,13 +1,12 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {map, Observable, of} from 'rxjs';
 import {DofusdbService} from '../../../../services/dofusdb.service';
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-chat-module-sub-area',
   imports: [
-    AsyncPipe,
-    NgIf
+    AsyncPipe
   ],
   templateUrl: './chat-module-sub-area.component.html',
   styleUrl: './chat-module-sub-area.component.css',
@@ -21,7 +20,7 @@ export class ChatModuleSubAreaComponent implements OnInit  {
 
   ngOnInit(): void {
     this.subareaLabel$ = this.dofusdbService.getSubareaInfo(this.subareaId).pipe(
-      map(subareaInfo => subareaInfo.label),
+      map(subareaInfo => subareaInfo.label ?? null),
     )
   }
 }

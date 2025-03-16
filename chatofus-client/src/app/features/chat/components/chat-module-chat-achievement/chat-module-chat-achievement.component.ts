@@ -1,13 +1,12 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {map, Observable, of} from 'rxjs';
-import {AsyncPipe, NgIf} from '@angular/common';
+import {AsyncPipe} from '@angular/common';
 import {DofusdbService} from '../../../../services/dofusdb.service';
 
 @Component({
   selector: 'app-chat-module-chat-achievement',
   imports: [
-    AsyncPipe,
-    NgIf
+    AsyncPipe
   ],
   templateUrl: './chat-module-chat-achievement.component.html',
   styleUrl: './chat-module-chat-achievement.component.css',
@@ -21,7 +20,7 @@ export class ChatModuleChatAchievementComponent implements OnInit {
 
   ngOnInit(): void {
     this.achievementLabel$ = this.dofusdbService.getAchievementInfo(this.achievementId).pipe(
-      map(achievementInfo => achievementInfo.label),
+      map(achievementInfo => achievementInfo?.label ?? null),
     )
   }
 

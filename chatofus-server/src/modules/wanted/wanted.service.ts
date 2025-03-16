@@ -4,7 +4,7 @@ import { PrismaService } from '../../common/prisma/prisma.service';
 import { Wanted, wantedDataset } from './dataset/wanted-dataset';
 import { Match } from './dto/match';
 import { GroupedMatch } from './dto/grouped-match';
-import { Searcher } from 'fast-fuzzy';
+import { MatchData, Searcher } from 'fast-fuzzy';
 import { WantedAnalyzerResult } from './dto/wanted-analyzer-result';
 
 @Injectable()
@@ -132,25 +132,28 @@ export class WantedService {
     });
 
     // Découper le message en mots
-    const tokens = chatChannelMessage
-      .replaceAll(`'`, ' ')
-      .split(/\s+/)
-      .filter((item) => item.length >= 3);
+    const tokens: string[] = chatChannelMessage
+      .replaceAll(/[^\w\s]/g, ' ') // ne garde que les lettres, chiffres et espaces
+      .replace(/\s+/g, ' ') // supprime les espaces en trop
+      .split(/\s+/) // sépare chaque terme pour créer un tableau de strings
+      .filter((item) => item.length >= 3); // on vire les termes de moins de 3 lettres car aucun avis avec un nom à 2 lettres et en plus ça vient biaisier le fuzzing
 
     // Rechercher parmi les tokens
     const correspondanceList: string[] = [];
-    const results = tokens.flatMap((token) => {
+    const results: MatchData<string>[] = tokens.flatMap((token) => {
       // Recherche des correspondances pour le token
-      const tokenResults = searcher.search(token);
+      const tokenResults: MatchData<string>[] = searcher.search(token);
 
       // Filtrer les résultats en vérifiant que la longueur du match est cohérente
-      const filteredResults = tokenResults.filter((result) => {
-        const { index, length } = result.match;
-        const fullWord = this.getFullMatchedWord(result.item, index, length);
-        const matchedSubstring = result.item.substring(index, index + length);
-        // Filtre les termes qui ont trop d'écart de taille et apportent des faux positifs
-        return this.checkWordLengthMatch(fullWord, matchedSubstring);
-      });
+      const filteredResults: MatchData<string>[] = tokenResults.filter(
+        (result) => {
+          const { index, length } = result.match;
+          const fullWord = this.getFullMatchedWord(result.item, index, length);
+          const matchedSubstring = result.item.substring(index, index + length);
+          // Filtre les termes qui ont trop d'écart de taille et apportent des faux positifs
+          return this.checkWordLengthMatch(fullWord, matchedSubstring);
+        },
+      );
 
       if (filteredResults.length > 0) {
         this.logger.log('---------------');

@@ -1,13 +1,3 @@
-<ng-container *ngIf="subareaLabel$ | async as label; else loading">
-  <span *ngIf="label != null; else showNull" class="text-chat-dynamic-subarea">
-    [{{ label }}]
-  </span>
-</ng-container>
-
-<ng-template #loading>
-  <span class="text-chat-dynamic-subarea">loading...</span>
-</ng-template>
-
-<ng-template #showNull>
-  <span class="text-chat-dynamic-subarea">null</span>
-</ng-template>
+<span class="text-chat-dynamic-subarea">
+  [{{ (subareaLabel$ |async ) ?? 'null' }}]
+</span>

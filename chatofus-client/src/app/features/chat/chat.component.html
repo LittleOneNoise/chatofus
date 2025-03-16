@@ -1,5 +1,11 @@
 <div class="chat-container bg-background flex flex-col h-full">
-  {{ activeChannels | json }}
+  <div class="flex flex-row space-x-2">
+    <p>{{ activeChannels | json }}</p>
+    <p> || Moy. (/r) : </p>
+    <app-chat-average-messages [messageStream]="messageNotifierSeek$"></app-chat-average-messages>
+    <p> || Moy. (/b) : </p>
+    <app-chat-average-messages [messageStream]="messageNotifierSales$"></app-chat-average-messages>
+  </div>
   <!-- Filtre des canaux -->
   <app-channel-filter
     (channelToggle)="toggleChannel($event)"
@@ -15,7 +21,8 @@
   </div>
 
   <!-- Notification de nouveaux messages -->
-  <div *ngIf="unreadMessages > 0" class="new-message-notification fixed bottom-4 right-4 bg-primary text-background px-4 py-2 rounded shadow-lg">
+  <div *ngIf="unreadMessages > 0"
+       class="new-message-notification fixed bottom-4 right-4 bg-primary text-background px-4 py-2 rounded shadow-lg">
     {{ unreadMessages }} nouveaux messages
     <button (click)="scrollToBottom()" class="ml-2 underline">Voir</button>
   </div>

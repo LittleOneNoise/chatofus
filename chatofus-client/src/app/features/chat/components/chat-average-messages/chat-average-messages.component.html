@@ -1,0 +1,7 @@
+<p *ngIf="averageMessagesPerMinute != 0; else placeholder">
+  {{ averageMessagesPerMinute | number:'1.1-1' }} messages/min
+</p>
+
+<ng-template #placeholder>
+  <p>Récupération des données pour le calcul de moyenne...</p>
+</ng-template>

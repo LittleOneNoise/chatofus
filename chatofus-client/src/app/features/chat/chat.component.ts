@@ -5,10 +5,12 @@ import {Socket} from 'socket.io-client';
 import {CommonModule} from '@angular/common';
 import {ChatMessageComponent} from './components/chat-message/chat-message.component';
 import {ChannelFilterComponent} from './components/channel-filter/channel-filter.component';
+import {ChatAverageMessagesComponent} from './components/chat-average-messages/chat-average-messages.component';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule, ChatMessageComponent, ChannelFilterComponent],
+  imports: [CommonModule, ChatMessageComponent, ChannelFilterComponent, ChatAverageMessagesComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
 })
@@ -19,6 +21,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
   unreadMessages = 0;
   autoScrollEnabled = true;
   activeChannels: Channel[] = [Channel.SEEK, Channel.SALES, Channel.INFO];
+  // Subject pour transmission des infos au chat-message-average
+  messageNotifierSeek$ = new Subject<void>();
+  messageNotifierSales$ = new Subject<void>();
   private socket: Socket | null = null;
   private readonly MAX_MESSAGES = 200;
 
@@ -41,6 +46,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewChecked {
           this.scrollToBottom();
         } else {
           this.unreadMessages++;
+        }
+
+        if (message.channel == Channel[Channel.SEEK]) {
+          this.messageNotifierSeek$.next()
+        }
+        else if (message.channel == Channel[Channel.SALES]) {
+          this.messageNotifierSales$.next()
         }
       });
     }
